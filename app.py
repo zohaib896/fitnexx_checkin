@@ -33,6 +33,14 @@ pw = st.sidebar.text_input("Kennwort", type="password")
 if pw == "fitnexx2026":
     if os.path.isfile('log.csv'):
         data = pd.read_csv('log.csv')
-        st.sidebar.write("Aktuelle Liste:")
+        st.sidebar.write("### Manager Area")
         st.sidebar.dataframe(data)
-        st.sidebar.download_button("Excel Export", data.to_csv(index=False), "wellpass_export.csv")
+
+        # The Export Button
+        st.sidebar.download_button("Excel Export (CSV)", data.to_csv(index=False), "wellpass_log.csv")
+
+        # The Reset Button for the new month
+        if st.sidebar.button("Clear List for New Month"):
+            os.remove('log.csv')
+            st.sidebar.success("The list has been cleared for the next month!")
+            st.rerun()
